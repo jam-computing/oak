@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-    m := components.GetModel()
+    m := components.GetModel(components.ViewingAnimations)
 
     p := tea.NewProgram(m, tea.WithAltScreen())
     if _, err := p.Run(); err != nil {
