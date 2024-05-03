@@ -17,14 +17,14 @@ type Animation struct {
 	Updated        string        `json:"updated"`
 }
 
-func MakeAnimation(data string) Animation {
+func MakeAnimation(data string) (*Animation, error) {
 	var a Animation
 	err := json.Unmarshal([]byte(data), &a)
 
 	if err != nil {
 		fmt.Println(err)
-		return Animation{}
+		return nil, err
 	}
 
-	return a
+	return &a, nil
 }

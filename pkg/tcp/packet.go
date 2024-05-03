@@ -3,6 +3,7 @@ package tcp
 import (
 	"encoding/binary"
 	"fmt"
+	"io"
 	"net"
 )
 
@@ -93,19 +94,15 @@ func (packet *Packet) SendRecv() Packet {
 	conn, err := net.Dial("tcp", "localhost:8080")
 
 	if err != nil {
-		fmt.Println(err)
 		return BadPacket()
 	}
 
 	_, err = conn.Write(packet.ToBytes())
-
 	if err != nil {
-		fmt.Println(err)
 		return BadPacket()
 	}
 
-	buf := make([]byte, 1024)
-	_, err = conn.Read(buf)
+    buf := make([]byte, 1024)
 
 	if err != nil {
 		fmt.Println(err)
