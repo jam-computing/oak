@@ -2,6 +2,7 @@ package components
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
 
 	"github.com/charmbracelet/bubbles/key"
@@ -75,25 +76,22 @@ func newModel() model {
 
 	// Make initial list of items
 
-	packet := tcp.NewPacket()
-	packet.Status = 200
-	packet.Command = 4
+    fmt.Println("Sending packet")
+
+	packet := tcp.NewFullPacket(tcp.NewMetaPacket(), nil, nil)
+	packet.Meta.Status = 200
+	packet.Meta.Command = 4
 	recv := packet.SendRecv()
 
-	jsonData := recv.Data[:len(recv.Data)]
+	jsonData := recv.Data.Data[:recv.Meta.Len]
 	var animations []tcp.Animation
     err := json.Unmarshal([]byte(jsonData), &animations)
-	var numItems int
-
-    f, err := tea.LogToFile("debug.log", "debug")
-    f.Write([]byte(jsonData))
-    f.Close()
 
     if err != nil {
         os.Exit(1)
     }
 
-	numItems = len(animations)
+    numItems := len(animations)
 
 	items := make([]list.Item, numItems)
 

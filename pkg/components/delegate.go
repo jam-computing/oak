@@ -23,12 +23,12 @@ func newItemDelegate(keys *delegateKeyMap) list.DefaultDelegate {
 		case tea.KeyMsg:
 			switch {
 			case key.Matches(msg, keys.choose):
+                packet := tcp.NewFullPacket(tcp.NewMetaPacket(), &title, nil)
+                packet.Meta.Status = 200
+                packet.Meta.Command = 2
 
-                packet := tcp.NewPacket()
-                packet.Status = 200
-                packet.Command = 2
-                packet.Data = title
                 _ = packet.SendRecv()
+
                 return m.NewStatusMessage(statusMessageStyle("Playing: " + title))
 
 			case key.Matches(msg, keys.remove):

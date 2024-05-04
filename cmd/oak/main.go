@@ -9,9 +9,10 @@ import (
 )
 
 func main() {
-    m := components.GetModel()
+    model := components.GetModel()
 
-    p := tea.NewProgram(m)
+    fmt.Println("Hello, WorlD!")
+    p := tea.NewProgram(model)
     if _, err := p.Run(); err != nil {
         fmt.Println("Error running program", err)
         os.Exit(1)
