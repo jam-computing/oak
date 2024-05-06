@@ -43,7 +43,6 @@ func newItemDelegate(keys *delegateKeyMap) list.DefaultDelegate {
 				packet.Meta.Status = 200
 				packet.Meta.Command = 13
 				_ = packet.SendRecv()
-
 				return m.NewStatusMessage(statusMessageStyle("Stopped all animations"))
 			}
 		}
